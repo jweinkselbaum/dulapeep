@@ -626,7 +626,7 @@
     <p style="color: #FFFFFF; text-align: center;">
       u have reached the guestbook of the OFFICIAL DU LA PEEP FAN PAGE!!! <br>
       plz leave me a message thx!!!<br>
-      <span style="color: #00FF00; font-size: 0.85em;">(entries saved 2 ur computer 4ever!! or until u clear ur cookies!!)</span>
+      <span style="color: #00FF00; font-size: 0.85em;">(entries shared with ALL visitors of this website!! ur message will live here 4ever!!)</span>
     </p>
     <hr class="cool">
     <table width="100%" id="gb-table">
@@ -667,13 +667,9 @@
   </div>
 
   <script>
-    const GB_KEY = 'dulapeep_guestbook';
-
-    function gbLoad() {
-      const entries = JSON.parse(localStorage.getItem(GB_KEY) || '[]');
-      const table = document.getElementById('gb-table');
-      entries.forEach(e => gbAppendRow(table, e.name, e.msg));
-    }
+    const SB_URL = 'https://zhcdnymfiqaoqbvcdqor.supabase.co';
+    const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpoY2RueW1maXFhb3FidmNkcW9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MjI3NzgsImV4cCI6MjA4ODM5ODc3OH0.JARxjEGghLObmElXoF8o3496ErnsuNadQJxWNwJ0DBk';
+    const SB_HEADERS = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY };
 
     function gbAppendRow(table, name, msg) {
       const tr = document.createElement('tr');
@@ -689,7 +685,20 @@
       table.appendChild(tr);
     }
 
-    function gbSubmit() {
+    async function gbLoad() {
+      try {
+        const res = await fetch(
+          SB_URL + '/rest/v1/guestbook?select=name,msg',
+          { headers: SB_HEADERS }
+        );
+        if (!res.ok) return;
+        const entries = await res.json();
+        const table = document.getElementById('gb-table');
+        entries.forEach(e => gbAppendRow(table, e.name, e.msg));
+      } catch(e) { /* silently fail if offline */ }
+    }
+
+    async function gbSubmit() {
       const nameEl = document.getElementById('gb-name');
       const msgEl  = document.getElementById('gb-msg');
       const name = nameEl.value.trim();
@@ -698,15 +707,32 @@
         alert('hey!! u need to fill in both fields!!! this is not optional!!!');
         return;
       }
-      const entries = JSON.parse(localStorage.getItem(GB_KEY) || '[]');
-      entries.push({ name, msg });
-      localStorage.setItem(GB_KEY, JSON.stringify(entries));
-      gbAppendRow(document.getElementById('gb-table'), name, msg);
-      nameEl.value = '';
-      msgEl.value  = '';
-      const confirm = document.getElementById('gb-confirm');
-      confirm.style.display = 'inline';
-      setTimeout(() => { confirm.style.display = 'none'; }, 4000);
+      const btn = document.querySelector('.gb-btn');
+      btn.disabled = true;
+      btn.textContent = '⏳ sending to the cloud!!!';
+
+      try {
+        const res = await fetch(SB_URL + '/rest/v1/guestbook', {
+          method: 'POST',
+          headers: { ...SB_HEADERS, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ name, msg })
+        });
+        if (res.ok) {
+          gbAppendRow(document.getElementById('gb-table'), name, msg);
+          nameEl.value = '';
+          msgEl.value  = '';
+          const confirm = document.getElementById('gb-confirm');
+          confirm.style.display = 'inline';
+          setTimeout(() => { confirm.style.display = 'none'; }, 4000);
+        } else {
+          alert('omg something went wrong!!! error ' + res.status + '!!! try again!!!');
+        }
+      } catch(e) {
+        alert('omg the internet broke!!! try again!!!');
+      }
+
+      btn.disabled = false;
+      btn.textContent = '📩 SIGN IT!!!';
     }
 
     gbLoad();
