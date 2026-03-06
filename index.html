@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>~~*~~ DU LA PEEP'S #1 FAN PAGE ~~*~~ (aka Dua Lipa we think)</title>
   <style>
     body {
@@ -282,6 +283,55 @@
       font-size: 1em;
     }
     .gb-btn:hover { background: #FFFF00; color: #FF00FF; }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      body { padding: 4px; }
+
+      /* Scale down headings */
+      h1 { font-size: 1.6em; letter-spacing: 0px; text-shadow: 2px 2px 0 #00FFFF, 3px 3px 0 #FF0000; }
+      h2 { font-size: 1.15em; }
+      h3 { font-size: 1.05em; }
+
+      /* Boxes */
+      .main-box { padding: 8px; }
+      .section-box, .section-box-pink, .section-box-gold, .section-box-cyan { padding: 8px; }
+
+      /* Stack the two-column layout tables vertically */
+      .layout-table { display: block; }
+      .layout-table tbody { display: block; }
+      .layout-table tr { display: block; }
+      .layout-td-left, .layout-td-right {
+        display: block;
+        width: 100% !important;
+        padding: 6px 0;
+      }
+
+      /* All images become fluid */
+      img { max-width: 100% !important; height: auto !important; }
+
+      /* Sparkle wrapper shrinks to fit */
+      .sparkle-wrapper { padding: 22px; }
+
+      /* The big Wendy quote */
+      .wendy-quote { font-size: 1.5em; letter-spacing: 1px; padding: 10px 12px; }
+
+      /* Visitor counter */
+      .counter { font-size: 1.1em; letter-spacing: 2px; }
+
+      /* Guestbook inputs fill the screen */
+      .gb-input { width: calc(100% - 12px); box-sizing: border-box; margin: 4px 0; display: block; }
+      .gb-btn { margin-top: 6px; }
+
+      /* Looser fun-text */
+      .fun-text { line-height: 1.7; }
+
+      /* Marquee slightly smaller */
+      marquee { font-size: 0.9em; }
+
+      /* YouTube embed: wrapper already handles this, just ensure no overflow */
+      iframe { max-width: 100%; }
+    }
   </style>
   <link rel="icon" id="favicon" type="image/png">
   <script>
@@ -547,16 +597,16 @@
       <p style="color: #FF69B4; font-size: 0.95em;">
         <i>1.4 MILLION PEOPLE have already witnessed this. You are about to join them. Welcome.</i>
       </p>
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/l8eXhZooqNY"
-        title="Wendy Williams calls Dua Lipa DULA PEEP"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style="border: 5px ridge #FF00FF; box-shadow: 0 0 25px #FF00FF88;"
-      ></iframe>
+      <div style="position:relative; width:100%; max-width:560px; margin:0 auto; aspect-ratio:16/9;">
+        <iframe
+          src="https://www.youtube.com/embed/l8eXhZooqNY"
+          title="Wendy Williams calls Dua Lipa DULA PEEP"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="position:absolute; top:0; left:0; width:100%; height:100%; border: 5px ridge #FF00FF; box-shadow: 0 0 25px #FF00FF88; box-sizing:border-box;"
+        ></iframe>
+      </div>
       <br>
       <span class="blink" style="color: #FF0000; font-size: 1.2em;">
         *** TURN YOUR SPEAKERS ON!!! ***
