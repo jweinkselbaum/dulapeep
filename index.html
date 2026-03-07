@@ -22,6 +22,10 @@
   <meta name="twitter:description" content="The Internet's #1 fansite for DULA PEEP (as officially named by Wendy Williams on live TV). Not Dua Lipa. DULA PEEP.">
   <meta name="twitter:image" content="https://dulapeep.xyz/og-preview.jpg">
   <style>
+    /* Prevent any element from causing horizontal overflow */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { overflow-x: hidden; max-width: 100%; }
+
     body {
       background-color: #000066;
       background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='5' y='25' font-size='18' fill='%23ffffff15'%3E%E2%AD%90%3C/text%3E%3C/svg%3E");
@@ -29,6 +33,8 @@
       color: #FFFF00;
       margin: 0;
       padding: 8px;
+      overflow-x: hidden;
+      max-width: 100%;
     }
 
     /* Blink animation (blink tag polyfill) */
